@@ -5,7 +5,8 @@ namespace App\Controller\api;
 use App\Entity\Organism;
 use App\Entity\Need;
 use App\Form\OrganismType;
-use App\Repository\OrganismRepository;
+use App\Repository\NeedRepository;
+use App\Repository\Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,7 @@ class OrganismController extends AbstractController
     #[Route('/signup', name: 'app_organism_signup', methods: ['POST'])]
     public function signup(
         Request $request,
+        NeedRepository $needRepository,
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface      $entityManager): JsonResponse
     {
@@ -46,13 +48,13 @@ class OrganismController extends AbstractController
             return new JsonResponse(['message' => 'Email is already registered'], JsonResponse::HTTP_CONFLICT);
         }
 
+        //dd($data['services']);
+
         // Ajouter chaque service un par un
         foreach ($data['services'] as $serviceData) {
-            $service = new Need();
-            $service->setName($serviceData['name']);
-            $service->setOrganism($organism);
-            $organism->addService($service);
-            $entityManager->persist($service);
+            /** @var Need $need */
+            $need = $needRepository->find($serviceData['id']);
+            $organism->addService($need);
         }
         
         //Save organism

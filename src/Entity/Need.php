@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\NeedRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NeedRepository::class)]
@@ -16,9 +18,13 @@ class Need
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'services')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Organism $organism = null;
+    #[ORM\ManyToMany(targetEntity: Organism::class, mappedBy: 'services')]
+    private Collection $organisms;
+
+    public function __construct()
+    {
+        $this->organisms = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -37,15 +43,31 @@ class Need
         return $this;
     }
 
-    public function getOrganism(): ?Organism
+    /**
+     * @return Collection<int, Organism>
+     */
+    public function getOrganisms(): Collection
     {
-        return $this->organism;
+        return $this->organisms;
     }
 
-    public function setOrganism(?Organism $organism): static
+    public function addOrganism(Organism $organism): static
     {
-        $this->organism = $organism;
+        if (!$this->organisms->contains($organism)) {
+            $this->organisms->add($organism);
+            $organism->addService($this);
+        }
 
         return $this;
     }
+
+    public function removeOrganism(Organism $organism): static
+    {
+        if ($this->organisms->removeElement($organism)) {
+            $organism->removeService($this);
+        }
+
+        return $this;
+    }
+
 }

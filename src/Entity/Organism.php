@@ -31,9 +31,6 @@ class Organism implements PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\OneToMany(mappedBy: 'organism', targetEntity: Need::class)]
-    private Collection $services;
-
     /**
      * @var string The hashed password
      */
@@ -46,6 +43,10 @@ class Organism implements PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'Please upload a file.')]
     #[ORM\Column(length: 255)]
     private ?string $certificat = null;
+
+    #[ORM\ManyToMany(targetEntity: Need::class, inversedBy: 'organisms')]
+    #[ORM\Column(nullable:false)]
+    private Collection $services;
 
     public function __construct()
     {
@@ -100,36 +101,6 @@ class Organism implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Need>
-     */
-    public function getServices(): Collection
-    {
-        return $this->services;
-    }
-
-    public function addService(Need $service): static
-    {
-        if (!$this->services->contains($service)) {
-            $this->services->add($service);
-            $service->setOrganism($this);
-        }
-
-        return $this;
-    }
-
-    public function removeService(Need $service): static
-    {
-        if ($this->services->removeElement($service)) {
-            // set the owning side to null (unless already changed)
-            if ($service->getOrganism() === $this) {
-                $service->setOrganism(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getPassword(): ?string
     {
         return $this->password;
@@ -162,6 +133,30 @@ class Organism implements PasswordAuthenticatedUserInterface
     public function setCertificat(string $certificat): static
     {
         $this->certificat = $certificat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Need>
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Need $service): static
+    {
+        if (!$this->services->contains($service)) {
+            $this->services->add($service);
+        }
+
+        return $this;
+    }
+
+    public function removeService(Need $service): static
+    {
+        $this->services->removeElement($service);
 
         return $this;
     }
