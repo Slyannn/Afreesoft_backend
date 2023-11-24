@@ -15,8 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-#[Route('/api/organism')]
-class OrganismController extends AbstractController
+#[Route('/api/auth/organism')]
+class OrganismAuthController extends AbstractController
 {
 
     public function __construct(){}
