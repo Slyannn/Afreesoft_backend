@@ -42,7 +42,7 @@ class StudentController extends AbstractController
         $address->setCity($data['address']['city']);
         $address->setZipCode($data['address']['zipCode']);
         $address->setCountry($data['address']['country']);
-        $address->addStudent($student);
+
 
         $existingStudent = $entityManager->getRepository(Student::class)->findOneBy(['email' => $student->getEmail()]);
 
