@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\AdminRepository;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: AdminRepository::class)]
-class Admin implements UserInterface, PasswordAuthenticatedUserInterface
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -27,11 +28,21 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $firstname = null;
+    #[ORM\ManyToOne(targetEntity: Address::class, inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Address $address = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $lastname = null;
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Student $student = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Organism $organism = null;
+
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -67,7 +78,7 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_ADMIN';
+        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
@@ -103,27 +114,51 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFirstname(): ?string
+    public function getAddress(): ?Address
     {
-        return $this->firstname;
+        return $this->address;
     }
 
-    public function setFirstname(string $firstname): static
+    public function setAddress(?Address $address): static
     {
-        $this->firstname = $firstname;
+        $this->address = $address;
 
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function getStudent(): ?Student
     {
-        return $this->lastname;
+        return $this->student;
     }
 
-    public function setLastname(string $lastname): static
+    public function setStudent(?Student $student): static
     {
-        $this->lastname = $lastname;
+        $this->student = $student;
 
         return $this;
     }
+
+    public function getOrganism(): ?Organism
+    {
+        return $this->organism;
+    }
+
+    public function setOrganism(?Organism $organism): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($organism === null && $this->organism !== null) {
+            $this->organism->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($organism !== null && $organism->getUser() !== $this) {
+            $organism->setUser($this);
+        }
+
+        $this->organism = $organism;
+
+        return $this;
+    }
+
+
 }

@@ -27,12 +27,13 @@ class Address
     #[ORM\Column(length: 255)]
     private ?string $country = null;
 
-    #[ORM\OneToMany(mappedBy: 'address', targetEntity: Student::class)]
-    private Collection $students;
+
+    #[ORM\OneToMany(mappedBy: 'address', targetEntity: OrganismAdmin::class)]
+    private Collection $organismAdmins;
 
     public function __construct()
     {
-        $this->students = new ArrayCollection();
+        $this->organismAdmins = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -88,30 +89,31 @@ class Address
         return $this;
     }
 
+
     /**
-     * @return Collection<int, Student>
+     * @return Collection<int, OrganismAdmin>
      */
-    public function getStudents(): Collection
+    public function getOrganismAdmins(): Collection
     {
-        return $this->students;
+        return $this->organismAdmins;
     }
 
-    public function addStudent(Student $student): static
+    public function addOrganismAdmin(OrganismAdmin $organismAdmin): static
     {
-        if (!$this->students->contains($student)) {
-            $this->students->add($student);
-            $student->setAddress($this);
+        if (!$this->organismAdmins->contains($organismAdmin)) {
+            $this->organismAdmins->add($organismAdmin);
+            $organismAdmin->setAddress($this);
         }
 
         return $this;
     }
 
-    public function removeStudent(Student $student): static
+    public function removeOrganismAdmin(OrganismAdmin $organismAdmin): static
     {
-        if ($this->students->removeElement($student)) {
+        if ($this->organismAdmins->removeElement($organismAdmin)) {
             // set the owning side to null (unless already changed)
-            if ($student->getAddress() === $this) {
-                $student->setAddress(null);
+            if ($organismAdmin->getAddress() === $this) {
+                $organismAdmin->setAddress(null);
             }
         }
 
