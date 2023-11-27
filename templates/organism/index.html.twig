@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Organism index{% endblock %}
+
+{% block body %}
+    <h1>Organism index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Logo</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Description</th>
+                <th>Certificat</th>
+                <th>Services</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for organism in organisms %}
+            <tr>
+                <td>{{ organism.id }}</td>
+                <td>{{ organism.logo }}</td>
+                <td>{{ organism.name }}</td>
+                <td>{{ organism.email }}</td>
+                <td>{{ organism.password }}</td>
+                <td>{{ organism.description }}</td>
+                <td>{{ organism.certificat }}</td>
+                <td>{{ organism.services }}</td>
+                <td>
+                    <a href="{{ path('app_organism_show', {'id': organism.id}) }}">show</a>
+                    <a href="{{ path('app_organism_edit', {'id': organism.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_organism_new') }}">Create new</a>
+{% endblock %}
