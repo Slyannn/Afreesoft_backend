@@ -42,8 +42,8 @@ class OrganismType extends AbstractType
                             'image/jpeg',
                             'image/jpg',
                             'image/jpe',
-                            'image/png'
-
+                            'image/png',
+                            'application/pdf',
                         ],
                         'mimeTypesMessage' => 'Please upload a valid Image File',
                     ])
