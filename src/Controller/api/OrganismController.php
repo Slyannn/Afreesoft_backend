@@ -119,4 +119,19 @@ class OrganismController extends AbstractController
         return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
     }
 
+
+
+    //Get All Organisms
+    #[Route('/all', name:'app_organism_get_all', methods:['GET'])]
+    public function getAllOrganisms(OrganismRepository $organismRepository):JsonResponse
+    {
+        $organisms =  $organismRepository->findAll();
+        $jsonContent = $this->serializer->serialize($organisms, 'json',
+        [AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+            return $object->getId();
+        }],
+        [AbstractNormalizer::IGNORED_ATTRIBUTES => ['certificate', 'roles', 'organism', 'student']]);
+
+        return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
+    }
 }
