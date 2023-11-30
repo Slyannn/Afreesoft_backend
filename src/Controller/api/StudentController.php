@@ -10,6 +10,7 @@ use App\Entity\Student;
 use App\Entity\User;
 use App\Repository\NeedRepository;
 use App\Repository\OrganismAdminRepository;
+use App\Repository\UserRepository;
 use App\Service\SignupUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,11 +19,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use function Sodium\add;
 
 #[Route('/api/student')]
 class StudentController extends AbstractController
 {
+    private Serializer $serializer;
+    //construct the controller Autowiring Serializer and NeedRepository
+    public function __construct()
+    {
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $this->serializer = new Serializer($normalizers, $encoders);
+    }
 
 
     /**
@@ -51,44 +65,23 @@ class StudentController extends AbstractController
 
     //get Student by email
     #[Route('/{email}', name: 'app_student_get', requirements: ['email' => '\S+@\S+\.\S+'], methods: ['GET'])]
-    public function getStudent(string $email, EntityManagerInterface $entityManager): JsonResponse
+    public function getStudent(string $email, UserRepository $userRepository): JsonResponse
     {
-        $org = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        $user = $userRepository->findOneBy(['email' => $email]);
 
-        if (!$org) {
+        if (!$user) {
             return new JsonResponse(['message' => 'Student not found'], Response::HTTP_NOT_FOUND);
         }
-        //dataProvider
-        /** @var User $org */
-        $org = [
-            'id' => $org->getId(),
-            'email' => $org->getEmail(),
-            'roles' => $org->getRoles(),
-            'password' => $org->getPassword(),
-            'address' => [
-                'id' => $org->getAddress()?->getId(),
-                'street' => $org->getAddress()?->getStreet(),
-                'city' => $org->getAddress()?->getCity(),
-                'zipCode' => $org->getAddress()?->getZipCode(),
-                'country' => $org->getAddress()?->getCountry(),
-            ],
-            'student' => [
-                'id' => $org->getStudent()?->getId(),
-                'firstname' => $org->getStudent()?->getFirstname(),
-                'lastname' => $org->getStudent()?->getLastname(),
-                'university' => $org->getStudent()?->getUniversity(),
-                'enable' => $org->getStudent()?->isEnable(),
-                'createdAt' =>$org->getStudent()?->getCreateAt(),
-                'needs' => array_map(function ($need) {
-                    return [
-                        'id' => $need->getId(),
-                        'name' => $need->getName(),
-                    ];
-                }, $org->getStudent()?->getNeeds()->toArray())
-            ],
 
-        ];
-        return new JsonResponse($org, Response::HTTP_OK);
+        //Serialize $user
+        $jsonContent = $this->serializer->serialize($user, 'json', [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                return $object->getId();
+            },
+            AbstractNormalizer::IGNORED_ATTRIBUTES => ['organism', 'organismAdmins', 'students', 'organisms', 'userIdentifier', 'user']
+        ]);
+
+        return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
     }
 
     /**
@@ -140,8 +133,8 @@ class StudentController extends AbstractController
     {
         $organismList = [];
 
-       foreach ($student->getNeeds() as $need){
-           foreach($need->getOrganisms() as $org){
+       foreach ($student->getNeeds() as $need) {
+           foreach ($need->getOrganisms() as $org) {
                $organismList[] = [
                    'id' => $org->getId(),
                    'name' => $org->getName(),
@@ -168,7 +161,7 @@ class StudentController extends AbstractController
                ];
            }
 
-           foreach ($need->getOrganismAdmins() as $organismAdmin){
+           foreach ($need->getOrganismAdmins() as $organismAdmin) {
                $organismList[] = [
                    'id' => $organismAdmin->getId(),
                    'name' => $organismAdmin->getName(),
@@ -191,15 +184,9 @@ class StudentController extends AbstractController
            }
        }
 
-
-
-       //give list of organism
         return new JsonResponse($organismList, Response::HTTP_OK);
+
     }
-
-
-
-
 
 
 }

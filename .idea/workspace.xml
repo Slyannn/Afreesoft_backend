@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="98974b7d-811b-4f0c-b725-a01710577d45" name="Changes" comment="Remove StudAutController">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/api/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/api/AuthController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/api/OrganismController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/api/OrganismController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/api/StudentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/api/StudentController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +174,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "AF-31",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/steph/PhpstormProjects/afreesoft-backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

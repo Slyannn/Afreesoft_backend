@@ -7,6 +7,9 @@ use App\Entity\Need;
 use App\Entity\Organism;
 use App\Entity\User;
 use App\Form\OrganismType;
+use App\Repository\NeedRepository;
+use App\Repository\OrganismRepository;
+use App\Repository\UserRepository;
 use App\Service\SignupUser;
 use App\Service\UploadFile;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,11 +19,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/api/organism')]
 class OrganismController extends AbstractController
 {
+    private Serializer $serializer;
+    //construct the controller Autowiring Serializer and NeedRepository
+    public function __construct()
+    {
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $this->serializer = new Serializer($normalizers, $encoders);
+    }
 
     #[Route('/signup', name: 'app_organism_signup', methods: ['GET', 'POST'])]
     public function signup(
@@ -83,42 +99,24 @@ class OrganismController extends AbstractController
 
     //get Organism by email
     #[Route('/{email}', name: 'app_organism_get', requirements: ['email' => '\S+@\S+\.\S+'], methods: ['GET'])]
-    public function getOrganism(string $email, EntityManagerInterface $entityManager): JsonResponse
+    public function getOrganism(string $email, EntityManagerInterface $entityManager, UserRepository $userRepository): JsonResponse
     {
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        /** @var User $user */
+        $user = $userRepository->findOneBy(['email' => $email]);
 
         if (!$user) {
             return new JsonResponse(['message' => 'Organism not found'], Response::HTTP_NOT_FOUND);
         }
-        //dataProvider
-        $user = [
-            'id' => $user->getId(),
-            'email' => $user->getEmail(),
-            'roles' => $user->getRoles(),
-            'password' => $user->getPassword(),
-            'address' => [
-                'id' => $user->getAddress()?->getId(),
-                'street' => $user->getAddress()?->getStreet(),
-                'city' => $user->getAddress()?->getCity(),
-                'zipCode' => $user->getAddress()?->getZipCode(),
-                'country' => $user->getAddress()?->getCountry(),
-            ],
-            'organism' => [
-                'id' => $user->getOrganism()?->getId(),
-                'name' => $user->getOrganism()?->getName(),
-                'description' => $user->getOrganism()?->getDescription(),
-                'logo' => $user->getOrganism()?->getLogo(),
-                'certificate' => $user->getOrganism()?->getCertificate(),
-                'services' => array_map(static function ($service) {
-                    return [
-                        'id' => $service->getId(),
-                        'name' => $service->getName(),
-                    ];
-                }, $user->getOrganism()?->getServices()->toArray())
-            ],
-        ];
 
-        return new JsonResponse($user, Response::HTTP_OK);
+        //Serialize $user
+        $jsonContent = $this->serializer->serialize($user, 'json', [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                return $object->getId();
+            },
+            AbstractNormalizer::IGNORED_ATTRIBUTES => ['student', 'organismAdmins', 'students', 'organisms', 'userIdentifier', 'user']
+        ]);
+
+        return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
     }
 
 }
