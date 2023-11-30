@@ -24,7 +24,6 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use function Sodium\add;
 
 #[Route('/api/student')]
 class StudentController extends AbstractController
@@ -183,7 +182,6 @@ class StudentController extends AbstractController
                ];
            }
        }
-
         return new JsonResponse($organismList, Response::HTTP_OK);
 
     }
