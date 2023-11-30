@@ -129,8 +129,9 @@ class OrganismController extends AbstractController
         $jsonContent = $this->serializer->serialize($organisms, 'json',
         [AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
             return $object->getId();
-        }],
-        [AbstractNormalizer::IGNORED_ATTRIBUTES => ['certificate', 'roles', 'organism', 'student']]);
+        },
+        AbstractNormalizer::IGNORED_ATTRIBUTES => ['certificate','password', 'roles', 'organism', 'organisms', 'organismAdmins', 'student', 'students']
+        ]);
 
         return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
     }
