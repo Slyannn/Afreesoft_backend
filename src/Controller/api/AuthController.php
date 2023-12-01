@@ -64,7 +64,9 @@ class AuthController extends AbstractController
 
 
     #[Route('/{email}', name: 'app_auth_get', requirements: ['email' => '\S+@\S+\.\S+'], methods: ['GET'])]
-    public function getUser(string $email, UserRepository $userRepository): JsonResponse
+    public function getOneUser(
+        string $email,
+        UserRepository $userRepository): JsonResponse
     {
         $user = $userRepository->findOneBy(['email' => $email]);
 
