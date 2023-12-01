@@ -62,26 +62,6 @@ class StudentController extends AbstractController
         return (new SignupUser())->signupUser($data, $student, 'ROLE_STUDENT', $org, $address, $entityManager, $userPasswordHasher);
     }
 
-    //get Student by email
-    #[Route('/{email}', name: 'app_student_get', requirements: ['email' => '\S+@\S+\.\S+'], methods: ['GET'])]
-    public function getStudent(string $email, UserRepository $userRepository): JsonResponse
-    {
-        $user = $userRepository->findOneBy(['email' => $email]);
-
-        if (!$user) {
-            return new JsonResponse(['message' => 'Student not found'], Response::HTTP_NOT_FOUND);
-        }
-
-        //Serialize $user
-        $jsonContent = $this->serializer->serialize($user, 'json', [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
-                return $object->getId();
-            },
-            AbstractNormalizer::IGNORED_ATTRIBUTES => ['organism', 'organismAdmins', 'students', 'organisms', 'userIdentifier', 'user']
-        ]);
-
-        return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
-    }
 
     /**
      * @throws \JsonException

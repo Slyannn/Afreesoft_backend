@@ -3,17 +3,33 @@
 namespace App\Controller\api;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 
 #[Route('/api/auth')]
 class AuthController extends AbstractController
 {
+    private Serializer $serializer;
+    //construct the controller Autowiring Serializer and NeedRepository
+    public function __construct()
+    {
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $this->serializer = new Serializer($normalizers, $encoders);
+    }
+
     /**
      * @throws \JsonException
      */
@@ -35,15 +51,36 @@ class AuthController extends AbstractController
         $user->setPassword($userPasswordHasher->hashPassword($user, $data['password']));
         $existingStudent = $entityManager->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
         if (!$existingStudent) {
-            return new JsonResponse(['message' => 'Email is not registered'], JsonResponse::HTTP_CONFLICT);
+            return new JsonResponse(['message' => 'Email is not registered'], Response::HTTP_CONFLICT);
         }
         if($existingStudent->getRoles()[0] === 'ROLE_ORGANISM'){
             $role = 'organism';
         }
         if ($userPasswordHasher->isPasswordValid($existingStudent, $data['password'])) {
-            return new JsonResponse(['message' => $role.' logged in successfully'], JsonResponse::HTTP_CREATED);
+            return new JsonResponse(['message' => $role.' logged in successfully'], Response::HTTP_CREATED);
         }
-        return new JsonResponse(['message' => 'Invalid credentials'], JsonResponse::HTTP_CONFLICT);
+        return new JsonResponse(['message' => 'Invalid credentials'], Response::HTTP_CONFLICT);
+    }
+
+
+    #[Route('/{email}', name: 'app_auth_get', requirements: ['email' => '\S+@\S+\.\S+'], methods: ['GET'])]
+    public function getUser(string $email, UserRepository $userRepository): JsonResponse
+    {
+        $user = $userRepository->findOneBy(['email' => $email]);
+
+        if (!$user) {
+            return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        //Serialize $user
+        $jsonContent = $this->serializer->serialize($user, 'json', [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                return $object->getId();
+            },
+            AbstractNormalizer::IGNORED_ATTRIBUTES => ['organism', 'organismAdmins', 'students', 'organisms', 'userIdentifier', 'user']
+        ]);
+
+        return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
     }
 
 

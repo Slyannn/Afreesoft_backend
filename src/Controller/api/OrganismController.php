@@ -70,21 +70,22 @@ class OrganismController extends AbstractController
         //Set student data
         $organism->setName($data['name']);
         $organism->setDescription($data['description']);
-        $organism->setName($data['name']);
 
 
         //add all services
         foreach ($data['services'] as $service) {
             //find need with id
+            /** @var Need $need */
             $need = $entityManager->getRepository(Need::class)->find($service['id']);
             if($need !== null){
                 //add need to organism
                 $need->addOrganism($organism);
                 $organism->addService($need);
             }else {
-                return new JsonResponse(['message' => 'Need not found'], Response::HTTP_NOT_FOUND);
+                return new JsonResponse(['message' => 'Service not found'], Response::HTTP_NOT_FOUND);
             }
         }
+
         //check when need already exist in $organism
         $existingOrganism = $entityManager->getRepository(Organism::class)->findOneBy(['name' => $organism->getName()]);
         if ($existingOrganism) {
@@ -95,28 +96,6 @@ class OrganismController extends AbstractController
         $address = new Address();
 
         return (new SignupUser())->signupUser($data, $organism, 'ROLE_ORGANISM', $user, $address, $entityManager, $userPasswordHasher);
-    }
-
-    //get Organism by email
-    #[Route('/{email}', name: 'app_organism_get', requirements: ['email' => '\S+@\S+\.\S+'], methods: ['GET'])]
-    public function getOrganism(string $email, EntityManagerInterface $entityManager, UserRepository $userRepository): JsonResponse
-    {
-        /** @var User $user */
-        $user = $userRepository->findOneBy(['email' => $email]);
-
-        if (!$user) {
-            return new JsonResponse(['message' => 'Organism not found'], Response::HTTP_NOT_FOUND);
-        }
-
-        //Serialize $user
-        $jsonContent = $this->serializer->serialize($user, 'json', [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
-                return $object->getId();
-            },
-            AbstractNormalizer::IGNORED_ATTRIBUTES => ['student', 'organismAdmins', 'students', 'organisms', 'userIdentifier', 'user']
-        ]);
-
-        return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
     }
 
 
