@@ -28,10 +28,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\ManyToOne(targetEntity: Address::class, inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Address $address = null;
-
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Student $student = null;
 
@@ -41,7 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -114,17 +110,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getAddress(): ?Address
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?Address $address): static
-    {
-        $this->address = $address;
-
-        return $this;
-    }
 
     public function getStudent(): ?Student
     {

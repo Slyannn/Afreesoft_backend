@@ -19,7 +19,7 @@ class NeedApiController extends AbstractController
     private Serializer $serializer;
     //construct the controller Autowiring Serializer and NeedRepository
     public function __construct(
-        private NeedRepository $needRepository
+        private readonly NeedRepository $needRepository
     )
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];

@@ -21,8 +21,6 @@ class Need
     #[ORM\ManyToMany(targetEntity: Student::class, mappedBy: 'needs')]
     private Collection $students;
 
-    #[ORM\ManyToMany(targetEntity: Organism::class, mappedBy: 'services', cascade: ['persist', 'remove'])]
-    private Collection $organisms;
 
     #[ORM\ManyToMany(targetEntity: OrganismAdmin::class, mappedBy: 'services')]
     private Collection $organismAdmins;
@@ -30,7 +28,6 @@ class Need
     public function __construct()
     {
         $this->students = new ArrayCollection();
-        $this->organisms = new ArrayCollection();
         $this->organismAdmins = new ArrayCollection();
     }
 
@@ -74,33 +71,6 @@ class Need
     {
         if ($this->students->removeElement($student)) {
             $student->removeNeed($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Organism>
-     */
-    public function getOrganisms(): Collection
-    {
-        return $this->organisms;
-    }
-
-    public function addOrganism(Organism $organism): static
-    {
-        if (!$this->organisms->contains($organism)) {
-            $this->organisms->add($organism);
-            $organism->addService($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrganism(Organism $organism): static
-    {
-        if ($this->organisms->removeElement($organism)) {
-            $organism->removeService($this);
         }
 
         return $this;

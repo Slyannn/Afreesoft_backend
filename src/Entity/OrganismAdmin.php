@@ -21,9 +21,6 @@ class OrganismAdmin
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
-
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $description = null;
 
@@ -32,6 +29,15 @@ class OrganismAdmin
 
     #[ORM\ManyToMany(targetEntity: Need::class, inversedBy: 'organismAdmins')]
     private Collection $services;
+
+    #[ORM\OneToOne(inversedBy: 'organismAdmin', cascade: ['persist', 'remove'])]
+    private ?Organism $profile = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $organismEmail = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $phone = null;
 
     public function __construct()
     {
@@ -67,17 +73,6 @@ class OrganismAdmin
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -123,6 +118,42 @@ class OrganismAdmin
     public function removeService(Need $service): static
     {
         $this->services->removeElement($service);
+
+        return $this;
+    }
+
+    public function getProfile(): ?Organism
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Organism $profile): static
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    public function getOrganismEmail(): ?string
+    {
+        return $this->organismEmail;
+    }
+
+    public function setOrganismEmail(?string $organismEmail): static
+    {
+        $this->organismEmail = $organismEmail;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): static
+    {
+        $this->phone = $phone;
 
         return $this;
     }

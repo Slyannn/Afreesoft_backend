@@ -5,12 +5,11 @@ namespace App\Controller\api;
 use App\Entity\Address;
 use App\Entity\Need;
 use App\Entity\Organism;
+use App\Entity\OrganismAdmin;
 use App\Entity\User;
-use App\Form\OrganismType;
-use App\Repository\NeedRepository;
+use App\Form\OrganismAdminType;
+use App\Repository\OrganismAdminRepository;
 use App\Repository\OrganismRepository;
-use App\Repository\UserRepository;
-use App\Service\SignupUser;
 use App\Service\UploadFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,6 +37,7 @@ class OrganismController extends AbstractController
         $this->serializer = new Serializer($normalizers, $encoders);
     }
 
+
     #[Route('/signup', name: 'app_organism_signup', methods: ['GET', 'POST'])]
     public function signup(
         Request $request,
@@ -50,27 +50,29 @@ class OrganismController extends AbstractController
         $data = $request->request->all();
 
         //New student
-        $organism = new Organism();
+        $organismAdmin = new OrganismAdmin();
+        $form = $this->createForm(OrganismAdminType::class, $organismAdmin);
 
-        $form = $this->createForm(OrganismType::class, $organism);
         $form->submit($data);
+        $organismAdmin->setName($data['name']);
+        $organismAdmin->setOrganismEmail($data['organismEmail']);
+        $organismAdmin->setPhone($data['phone']);
+        $organismAdmin->setDescription($data['description']);
 
         $logoFile = $request->files->get('logo');
         if ($logoFile) {
-            $logoFileName = $uploadFile->uploadedFilename($logoFile, $slugger);
-            $organism->setLogo($logoFileName);
+            $logoFileName = $uploadFile->uploadedFilename($logoFile, $slugger, 'logo');
+            $organismAdmin->setLogo($logoFileName);
         }
 
-        //certificate File
-        $certificateFile = $request->files->get('certificate');
-        if ($certificateFile) {
-            $certificateFileName = $uploadFile->uploadedFilename($certificateFile, $slugger);
-            $organism->setCertificate($certificateFileName);
-        }
-        //Set student data
-        $organism->setName($data['name']);
-        $organism->setDescription($data['description']);
+        $address = new Address();
+        $address->setStreet($data['address']['street']);
+        $address->setCity($data['address']['city']);
+        $address->setZipcode($data['address']['zipcode']);
+        $address->setCountry($data['address']['country']);
 
+        $entityManager->persist($address);
+        $organismAdmin->setAddress($address);
 
         //add all services
         foreach ($data['services'] as $service) {
@@ -79,37 +81,57 @@ class OrganismController extends AbstractController
             $need = $entityManager->getRepository(Need::class)->find($service['id']);
             if($need !== null){
                 //add need to organism
-                $need->addOrganism($organism);
-                $organism->addService($need);
+                $need->addOrganismAdmin($organismAdmin);
+                $organismAdmin->addService($need);
             }else {
                 return new JsonResponse(['message' => 'Service not found'], Response::HTTP_NOT_FOUND);
             }
         }
 
-        //check when need already exist in $organism
-        $existingOrganism = $entityManager->getRepository(Organism::class)->findOneBy(['name' => $organism->getName()]);
-        if ($existingOrganism) {
-            return new JsonResponse(['message' => 'Organism already exist'], Response::HTTP_CONFLICT);
+        $profile = new Organism();
+        $certificateFile = $request->files->get('profile')['certificate'];
+        if ($certificateFile) {
+            $certificateFileName = $uploadFile->uploadedFilename($certificateFile, $slugger, 'certificate');
+            $profile->setCertificate($certificateFileName);
         }
 
         $user = new User();
-        $address = new Address();
+        $user->setEmail($data['profile']['user']['email']);
+        $user->setPassword($userPasswordHasher->hashPassword($user, $data['profile']['user']['password']));
+        $existingUser= $entityManager->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
+        if ($existingUser) {
+            return new JsonResponse(['message' => 'Email is already registered'], Response::HTTP_CONFLICT);
+        }
+        $user->setRoles(['ROLE_ORGANISM']);
 
-        return (new SignupUser())->signupUser($data, $organism, 'ROLE_ORGANISM', $user, $address, $entityManager, $userPasswordHasher);
+        $entityManager->persist($user);
+        $entityManager->persist($profile);
+
+        $entityManager->persist($organismAdmin);
+
+        //a la fin avant le flush
+        $address->addOrganismAdmin($organismAdmin);
+        $profile->setOrganismAdmin($organismAdmin);
+        $user->setOrganism($profile);
+        $entityManager->flush();
+
+
+        return new JsonResponse(['message' => 'User created'], Response::HTTP_CREATED);
     }
+
 
 
 
     //Get All Organisms
     #[Route('/all', name:'app_organism_get_all', methods:['GET'])]
-    public function getAllOrganisms(OrganismRepository $organismRepository):JsonResponse
+    public function getAllOrganisms(OrganismAdminRepository $organismAdminRepository):JsonResponse
     {
-        $organisms =  $organismRepository->findAll();
+        $organisms =  $organismAdminRepository->findAll();
         $jsonContent = $this->serializer->serialize($organisms, 'json',
         [AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
             return $object->getId();
         },
-        AbstractNormalizer::IGNORED_ATTRIBUTES => ['certificate','password', 'roles', 'organism', 'organisms', 'organismAdmins', 'student', 'students']
+        AbstractNormalizer::IGNORED_ATTRIBUTES => ['certificate','password', 'roles', 'organism', 'organisms', 'organismAdmins', 'student', 'students', 'organismAdmin']
         ]);
 
         return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);

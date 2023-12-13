@@ -4,10 +4,8 @@ namespace App\Form;
 
 use App\Entity\Need;
 use App\Entity\OrganismAdmin;
-use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -65,12 +63,21 @@ class OrganismAdminType extends AbstractType
                     'class' => 'form-control mb-3 ',
                 ]
             ])
-            ->add('email', EmailType::class,[
+            ->add('organismEmail', EmailType::class,[
                 'label' => ' ',
                 'required' => true,
                 'attr' => [
                     'placeholder' =>
-                        'Entrez l\' email...',
+                        'Entrez l\' email de votre organisme...',
+                    'class' => 'form-control mb-3 ',
+                ]
+            ])
+            ->add('phone', TextType::class,[
+                'label' => ' ',
+                'required' => true,
+                'attr' => [
+                    'placeholder' =>
+                        'Entrez le numéro de téléphone de votre organisme...',
                     'class' => 'form-control mb-3 ',
                 ]
             ])

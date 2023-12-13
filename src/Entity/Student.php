@@ -38,6 +38,9 @@ class Student
     #[ORM\ManyToMany(targetEntity: Need::class, inversedBy: 'students')]
     private Collection $needs;
 
+    #[ORM\ManyToOne(inversedBy: 'students')]
+    private ?Address $address = null;
+
 
 
     public function __construct(){
@@ -155,6 +158,18 @@ class Student
     public function removeNeed(Need $need): static
     {
         $this->needs->removeElement($need);
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): static
+    {
+        $this->address = $address;
 
         return $this;
     }

@@ -38,28 +38,16 @@
                         {% endfor %}
                     <hr>
                 </div>
-                <div class="col-2">
-                    <h5>Organism-Profile</h5>
-                </div>
-                <div class="col-10">
-                    {% for organism in need.organisms %}
-                        <p>{{ organism.user.email }}</p>
-                    {% else %}
-                        <span>No Organism-Profile</span>
-                    {% endfor %}
-                    <hr>
-                </div>
 
                 <div class="col-2">
-                    <h5>Organism-Admin</h5>
+                    <h5>Organisms</h5>
                 </div>
                 <div class="col-10">
                     {% for organismAdmin in need.organismAdmins %}
-                        <p>{{ organismAdmin.email }}</p>
+                        <p><img src="/uploads/logo/{{ organismAdmin.logo }}" class="img-thumbnail" alt="logo" style="width: 40px; height: 40px;"> {{ organismAdmin.organismEmail }}</p>
                     {% else %}
-                        <span>No Organism-Admin</span>
+                        <span>No Organism</span>
                     {% endfor %}
-
                 </div>
 
             </div>

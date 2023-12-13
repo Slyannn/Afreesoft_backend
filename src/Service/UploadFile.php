@@ -10,9 +10,9 @@ class UploadFile extends AbstractController
 {
 
 
-    public function uploadedFilename(mixed $uploadedFile, SluggerInterface $slugger): string
+    public function uploadedFilename(mixed $uploadedFile, SluggerInterface $slugger, string $order): string
     {
-        $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
+        $destination = $this->getParameter('kernel.project_dir') . '/public/uploads/' . $order . '/';
         $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $slugger->slug($originalFilename);
         $newFilename = $safeFilename.'-'.uniqid('', true).'.'.$uploadedFile->guessExtension();

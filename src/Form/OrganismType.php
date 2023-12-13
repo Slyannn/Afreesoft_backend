@@ -14,24 +14,6 @@ class OrganismType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('logo', FileType::class, [
-        'label' => false,
-        'mapped' => false,
-        'required' => true,
-        'constraints' => [
-            new File([
-                'mimeTypes' => [
-                    'image/jpeg',
-                    'image/jpg',
-                    'image/jpe',
-                    'image/png'
-
-                ],
-                'mimeTypesMessage' => 'Please upload a valid Image File',
-            ])
-        ],])
-            ->add('name')
-            ->add('description')
             ->add('certificate', FileType::class, [
                 'label' => false,
                 'mapped' => false,
@@ -39,17 +21,12 @@ class OrganismType extends AbstractType
                 'constraints' => [
                     new File([
                         'mimeTypes' => [
-                            'image/jpeg',
-                            'image/jpg',
-                            'image/jpe',
-                            'image/png',
                             'application/pdf',
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid Image File',
+                        'mimeTypesMessage' => 'Please upload a valid File',
                     ])
                 ],])
             ->add('user')
-            ->add('services')
         ;
     }
 

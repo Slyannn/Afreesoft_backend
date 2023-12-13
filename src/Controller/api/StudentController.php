@@ -4,14 +4,10 @@ namespace App\Controller\api;
 
 use App\Entity\Address;
 use App\Entity\Need;
-use App\Entity\Organism;
-use App\Entity\OrganismAdmin;
 use App\Entity\Student;
 use App\Entity\User;
 use App\Repository\NeedRepository;
 use App\Repository\OrganismAdminRepository;
-use App\Repository\UserRepository;
-use App\Service\SignupUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,7 +17,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -56,10 +51,30 @@ class StudentController extends AbstractController
         $student->setLastname($data['lastname']);
         $student->setUniversity($data['university']);
 
-        //New address
         $address = new Address();
-        $org = new User();
-        return (new SignupUser())->signupUser($data, $student, 'ROLE_STUDENT', $org, $address, $entityManager, $userPasswordHasher);
+        $address->setStreet($data['address']['street']);
+        $address->setCity($data['address']['city']);
+        $address->setZipCode($data['address']['zipCode']);
+        $address->setCountry($data['address']['country']);
+
+        $entityManager->persist($address);
+        $student->setAddress($address);
+
+        $user = new User();
+        $user->setEmail($data['user']['email']);
+        $existingUser= $entityManager->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
+        if ($existingUser) {
+            return new JsonResponse(['message' => 'Email is already registered'], Response::HTTP_CONFLICT);
+        }
+        $user->setPassword($userPasswordHasher->hashPassword($user, $data['user']['password']));
+        $user->setRoles(['ROLE_STUDENT']);
+        $entityManager->persist($user);
+
+        $student->setUser($user);
+        $entityManager->persist($student);
+        $entityManager->flush();
+
+        return new JsonResponse(['message' => 'User created'], Response::HTTP_CREATED);
     }
 
 
@@ -67,7 +82,7 @@ class StudentController extends AbstractController
      * @throws \JsonException
      */
     #[Route('/{id}/need', name: 'app_student_need_add', methods: ['GET', 'POST'])]
-    public function addNedd(
+    public function addNeed(
         Request $request,
         Student $student,
         EntityManagerInterface $entityManager,

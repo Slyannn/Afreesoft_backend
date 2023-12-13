@@ -16,68 +16,20 @@ class Organism
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $logo = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
-
-    #[ORM\Column(length: 500)]
-    private ?string $description = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $certificate = null;
 
     #[ORM\OneToOne(inversedBy: 'organism')]
     private ?User $user = null;
 
-    #[ORM\ManyToMany(targetEntity: Need::class, inversedBy: 'organisms', cascade: ['persist', 'remove'])]
-    private Collection $services;
+    #[ORM\OneToOne(mappedBy: 'profile', cascade: ['persist', 'remove'])]
+    private ?OrganismAdmin $organismAdmin = null;
 
-    public function __construct()
-    {
-        $this->services = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLogo(): ?string
-    {
-        return $this->logo;
-    }
-
-    public function setLogo(string $logo): static
-    {
-        $this->logo = $logo;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     public function getCertificate(): ?string
     {
@@ -103,26 +55,24 @@ class Organism
         return $this;
     }
 
-    /**
-     * @return Collection<int, Need>
-     */
-    public function getServices(): Collection
+    public function getOrganismAdmin(): ?OrganismAdmin
     {
-        return $this->services;
+        return $this->organismAdmin;
     }
 
-    public function addService(Need $service): static
+    public function setOrganismAdmin(?OrganismAdmin $organismAdmin): static
     {
-        if (!$this->services->contains($service)) {
-            $this->services->add($service);
+        // unset the owning side of the relation if necessary
+        if ($organismAdmin === null && $this->organismAdmin !== null) {
+            $this->organismAdmin->setProfile(null);
         }
 
-        return $this;
-    }
+        // set the owning side of the relation if necessary
+        if ($organismAdmin !== null && $organismAdmin->getProfile() !== $this) {
+            $organismAdmin->setProfile($this);
+        }
 
-    public function removeService(Need $service): static
-    {
-        $this->services->removeElement($service);
+        $this->organismAdmin = $organismAdmin;
 
         return $this;
     }

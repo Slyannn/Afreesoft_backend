@@ -5,70 +5,94 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98974b7d-811b-4f0c-b725-a01710577d45" name="Changes" comment="Remove StudAutController">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_30_11_2023_20_12_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_30_11_2023_20_12__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6568e3ae8a1236.90634318.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6568e3bf029395.77775415.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6568e3f60d2b98.24401642.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6568e7ba2cd654.87691243.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6568e7c4ae6276.08695179.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6568e7fac81fa7.69305923.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6568e8b8066be4.10259400.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6568e8cdcb5666.31433850.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6568e8e7b9bd37.97674807.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6568e8f56f1ae6.46574303.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6569007657d492.77955149.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6569007659e036.05781162.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-656912009ce756.19444838.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-656914dd4c2ff1.71810884.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-656914dd4e4ef6.00319598.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-656915a9d65d02.94864301.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-656915a9da34a7.60910930.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6569185f3dfd05.13774142.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6569185f401a80.92390985.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65691b2316a057.86344088.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65691b23188cb9.51707768.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65691b8be64a66.70399624.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65691b8be7f862.37449830.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65691cf2910e72.62434337.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65691cf293d247.81861461.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65691ff5af1832.05588204.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65691ff5b1c4d9.98551810.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65692021c8eba9.94282287.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65692021cdee21.55674787.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65692056ea94a9.49413854.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-65692056ec1d63.91692882.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6569209fcd5e36.57457075.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-6569209fd16f06.80086829.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-656920a697b776.22947418.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/humanitarian-656920a698b7a8.82408689.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e3ae8dd893.36844303.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e3bf036190.69450238.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e3f60e1be9.34455989.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e7ba308257.53213905.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e7c4aed1a5.09058892.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e7fac9b330.42193078.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e8b80e3a52.46648622.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e8cdceebb3.01215103.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e8e7ba8393.05546293.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e8f5713236.86773311.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-65690097b0d217.96134867.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-65690097be04e7.90210817.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-65690288218e57.20237522.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-65690288246503.54988076.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-656903f1965579.68420999.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-656903f198d118.52166377.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6569103f6208a6.92863754.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6569103f668e11.37919015.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-656910f67b8621.48136487.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-656910f67dc489.72409603.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6569118334a923.80473012.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6569118336d3b3.39536572.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-65691200a03cc7.98326650.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_30_11_2023_20_12_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_30_11_2023_20_12__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20231127202940.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20231127221148.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6567ad3d0aff43.95827577.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6567ad9d45c4e0.27391003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6568e3ae8a1236.90634318.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6568e3bf029395.77775415.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6568e3f60d2b98.24401642.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6568e7ba2cd654.87691243.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6568e7c4ae6276.08695179.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6568e7fac81fa7.69305923.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6568e8b8066be4.10259400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6568e8cdcb5666.31433850.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6568e8e7b9bd37.97674807.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6568e8f56f1ae6.46574303.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6569007657d492.77955149.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6569007659e036.05781162.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-656912009ce756.19444838.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-656914dd4c2ff1.71810884.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-656914dd4e4ef6.00319598.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-656915a9d65d02.94864301.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-656915a9da34a7.60910930.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6569185f3dfd05.13774142.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6569185f401a80.92390985.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65691b2316a057.86344088.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65691b23188cb9.51707768.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65691b8be64a66.70399624.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65691b8be7f862.37449830.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65691cf2910e72.62434337.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65691cf293d247.81861461.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65691ff5af1832.05588204.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65691ff5b1c4d9.98551810.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65692021c8eba9.94282287.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65692021cdee21.55674787.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65692056ea94a9.49413854.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-65692056ec1d63.91692882.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6569209fcd5e36.57457075.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-6569209fd16f06.80086829.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-656920a697b776.22947418.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/humanitarian-656920a698b7a8.82408689.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6567ad3d0f1420.23975868.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6567ad9d47cbc8.46077445.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e3ae8dd893.36844303.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e3bf036190.69450238.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e3f60e1be9.34455989.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e7ba308257.53213905.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e7c4aed1a5.09058892.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e7fac9b330.42193078.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e8b80e3a52.46648622.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e8cdceebb3.01215103.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e8e7ba8393.05546293.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6568e8f5713236.86773311.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-65690097b0d217.96134867.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-65690097be04e7.90210817.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-65690288218e57.20237522.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-65690288246503.54988076.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-656903f1965579.68420999.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-656903f198d118.52166377.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6569103f6208a6.92863754.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6569103f668e11.37919015.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-656910f67b8621.48136487.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-656910f67dc489.72409603.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6569118334a923.80473012.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-6569118336d3b3.39536572.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/student-with-graduation-cap-65691200a03cc7.98326650.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/admin/OrganismAdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/admin/OrganismAdminController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/api/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/api/AuthController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/api/NeedApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/api/NeedApiController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/api/OrganismController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/api/OrganismController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/api/StudentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/api/StudentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Address.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Address.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Need.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Need.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Organism.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Organism.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/OrganismAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/OrganismAdmin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Student.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Student.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/OrganismAdminType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/OrganismAdminType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/OrganismType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/OrganismType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/SignupUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/SignupUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/UploadFile.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UploadFile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/need/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/need/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/organism_admin/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/organism_admin/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/organism_admin/organism_profile.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/organism_admin/organism_profile.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/organism_admin/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/organism_admin/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/organism_admin/showOrganism.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/organism_admin/showOrganism.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,23 +255,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/steph/PhpstormProjects/afreesoft-backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;php.override.implement.member.chooser.php.doc&quot;: &quot;NONE&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "AF-34",
+    "last_opened_file_path": "C:/Users/steph/PhpstormProjects/afreesoft-backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "php.override.implement.member.chooser.php.doc": "NONE",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="form-check" />
@@ -279,6 +303,7 @@
       <workItem from="1701186973455" duration="8086000" />
       <workItem from="1701219098034" duration="3346000" />
       <workItem from="1701283414143" duration="9834000" />
+      <workItem from="1702463727457" duration="18896000" />
     </task>
     <task id="LOCAL-00001" summary="Register Student API">
       <option name="closed" value="true" />

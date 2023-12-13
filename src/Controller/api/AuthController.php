@@ -69,24 +69,32 @@ class AuthController extends AbstractController
         UserRepository $userRepository): JsonResponse
     {
         $user = $userRepository->findOneBy(['email' => $email]);
+        $jsonContent = '';
 
         if (!$user) {
             return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
         }
 
-        //Serialize $user
-        $jsonContent = $this->serializer->serialize($user, 'json', [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
-                return $object->getId();
-            },
-            AbstractNormalizer::IGNORED_ATTRIBUTES => ['organism', 'organismAdmins', 'students', 'organisms', 'userIdentifier', 'user']
-        ]);
+        if($user->getRoles()[0] === 'ROLE_ORGANISM') {
+            $jsonContent = $this->serializer->serialize($user, 'json', [
+                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                    return $object->getId();
+                },
+                AbstractNormalizer::IGNORED_ATTRIBUTES => ['student','students', 'profile','organismAdmins', 'organisms', 'userIdentifier', 'user']
+            ]);
+
+        }else{
+            //Serialize $user
+            $jsonContent = $this->serializer->serialize($user, 'json', [
+                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                    return $object->getId();
+                },
+                AbstractNormalizer::IGNORED_ATTRIBUTES => ['organism', 'organismAdmins', 'students', 'organisms', 'userIdentifier', 'user']
+            ]);
+        }
 
         return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
     }
-
-
-
 
 
 }

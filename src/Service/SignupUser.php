@@ -12,18 +12,7 @@ class SignupUser extends AbstractController
 
     public function signupUser(mixed $data, mixed $entity , mixed $role , mixed $user, mixed $address, mixed $entityManager, UserPasswordHasherInterface $userPasswordHasher): JsonResponse
     {
-        $user->setEmail($data['user']['email']);
-        $user->setPassword($userPasswordHasher->hashPassword($user, $data['user']['password']));
-        $user->setRoles([$role]);
-        $address->setStreet($data['user']['address']['street']);
-        $address->setCity($data['user']['address']['city']);
-        $address->setZipCode($data['user']['address']['zipCode']);
-        $address->setCountry($data['user']['address']['country']);
 
-        $existingUser= $entityManager->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
-        if ($existingUser) {
-            return new JsonResponse(['message' => 'Email is already registered'], JsonResponse::HTTP_CONFLICT);
-        }
 
         $entityManager->persist($address);
         $entityManager->flush();

@@ -12,7 +12,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-2">
-                    <h5>id</h5>
+                    <h5>id &#x1F511;</h5>
                 </div>
                 <div class="col-10">
                     <p>{{ organism_admin.id }}</p>
@@ -20,15 +20,15 @@
                 </div>
 
                 <div class="col-2">
-                    <h5>Logo</h5>
+                    <h5>Logo &#128248;</h5>
                 </div>
                 <div class="col-10">
-                    <img src="/uploads/{{ organism_admin.logo }}" class="img-thumbnail" alt="logo" style="width: 100px; height: 100px;">
+                    <img src="/uploads/logo/{{ organism_admin.logo }}" class="img-thumbnail" alt="logo" style="width: 100px; height: 100px;">
                     <hr>
                 </div>
 
                 <div class="col-2">
-                    <h5>Name</h5>
+                    <h5>Name &#9997;</h5>
                 </div>
                 <div class="col-10">
                     <span>{{ organism_admin.name }}</span>
@@ -36,62 +36,50 @@
                 </div>
 
                 <div class="col-2">
-                    <h5>Email</h5>
+                    <h5>Organism Email &#128231;</h5>
                 </div>
                 <div class="col-10">
-                    <span>{{ organism_admin.email }}</span>
+                    <span>{{ organism_admin.organismEmail }}</span>
                     <hr>
                 </div>
 
                 <div class="col-2">
-                    <h5>Description</h5>
+                    <h5>Description &#x1F4F0; </h5>
                 </div>
                 <div class="col-10">
                     <span>{{ organism_admin.description}}</span>
                     <hr>
                 </div>
 
+
                 <div class="col-2">
-                    <h5>Street</h5>
+                    <h5>Phone &#x260E;</h5>
                 </div>
                 <div class="col-10">
-                    <span>{{ organism_admin.address.street}}</span>
+                    <span>{{ organism_admin.phone}}</span>
+                    <hr>
+                </div>
+                {% set address = organism_admin.address.street ~ ' ' ~
+                    organism_admin.address.zipCode ~ ' ' ~
+                    organism_admin.address.city ~ ' ' ~
+                    organism_admin.address.country %}
+
+                <div class="col-2">
+                    <h5>Address &#x1F3E0;</h5>
+                </div>
+                <div class="col-10">
+                    <span>{{ address}}</span>
                     <hr>
                 </div>
 
-                <div class="col-2">
-                    <h5>Zip Code</h5>
-                </div>
-                <div class="col-10">
-                    <span>{{ organism_admin.address.zipCode}}</span>
-                    <hr>
-                </div>
 
                 <div class="col-2">
-                    <h5>City</h5>
+                    <h5>Services &#128154;</h5>
                 </div>
                 <div class="col-10">
-                    <span>{{ organism_admin.address.city}}</span>
-                    <hr>
-                </div>
-
-                <div class="col-2">
-                    <h5>Country</h5>
-                </div>
-                <div class="col-10">
-                    <span>{{ organism_admin.address.country}}</span>
-                    <hr>
-                </div>
-
-                <div class="col-2">
-                    <h5>Services</h5>
-                </div>
-                <div class="col-10">
-                    <ul>
                         {% for service in organism_admin.services  %}
-                            <li>{{ service.name }}</li>
+                            <p><span style='font-size:10px;'>&#10004;</span> {{ service.name }}</p>
                         {% endfor %}
-                    </ul>
                     <hr>
                 </div>
 
