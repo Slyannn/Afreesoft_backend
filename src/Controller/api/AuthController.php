@@ -4,11 +4,14 @@ namespace App\Controller\api;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\JwtService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -22,6 +25,7 @@ use Symfony\Component\Serializer\Serializer;
 class AuthController extends AbstractController
 {
     private Serializer $serializer;
+
     //construct the controller Autowiring Serializer and NeedRepository
     public function __construct()
     {
@@ -37,12 +41,13 @@ class AuthController extends AbstractController
     public function login(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        JwtService $jwt,
     ): JsonResponse
     {
         //Extract data from the request
         $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
-        $role = 'student';
+
         //New student
         $user = new User();
         //Set student data
@@ -53,48 +58,62 @@ class AuthController extends AbstractController
         if (!$existingStudent) {
             return new JsonResponse(['message' => 'Email is not registered'], Response::HTTP_CONFLICT);
         }
-        if($existingStudent->getRoles()[0] === 'ROLE_ORGANISM'){
-            $role = 'organism';
-        }
+
         if ($userPasswordHasher->isPasswordValid($existingStudent, $data['password'])) {
-            return new JsonResponse(['message' => $role.' logged in successfully'], Response::HTTP_CREATED);
+            $header = [
+                'typ' => 'JWT',
+                'alg' => 'HS256'
+            ];
+            $payload =[
+                'user_id' => $existingStudent->getId()
+            ];
+            $token = $jwt->generate($header,$payload, $this->getParameter('app.jwtsecret'));
+
+            return new JsonResponse(compact('token'), Response::HTTP_OK);
         }
         return new JsonResponse(['message' => 'Invalid credentials'], Response::HTTP_CONFLICT);
     }
 
-
-    #[Route('/{email}', name: 'app_auth_get', requirements: ['email' => '\S+@\S+\.\S+'], methods: ['GET'])]
-    public function getOneUser(
-        string $email,
-        UserRepository $userRepository): JsonResponse
+    #[Route('/currentUser/{token}', name: 'current_user', methods: ['GET'])]
+    public function currentUser($token,
+                                 UserRepository $userRepository,
+                                 JwtService $jwt,
+                                 Request $request,
+                                 SessionInterface $session,
+    ): JsonResponse
     {
-        $user = $userRepository->findOneBy(['email' => $email]);
-        $jsonContent = '';
+        if($jwt->isValid($token) && !$jwt->isExpired($token) &&
+                $jwt->checkToken($token, $this->getParameter('app.jwtsecret'))) {
+            $payload = $jwt->getPayload($token);
+            //Recovering the user token
+            $user = $userRepository->find($payload['user_id']);
 
-        if (!$user) {
-            return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+            if ($user) {
+                if ($user->getRoles()[0] === 'ROLE_ORGANISM') {
+                    $jsonContent = $this->serializer->serialize($user, 'json', [
+                        AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                            return $object->getId();
+                        },
+                        AbstractNormalizer::IGNORED_ATTRIBUTES => ['student', 'students', 'profile', 'organismAdmins', 'organisms', 'userIdentifier', 'user']
+                    ]);
+
+                } else {
+                    //Serialize $user
+                    $jsonContent = $this->serializer->serialize($user, 'json', [
+                        AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                            return $object->getId();
+                        },
+                        AbstractNormalizer::IGNORED_ATTRIBUTES => ['organism', 'createAt', 'organismAdmins', 'students', 'organisms', 'userIdentifier', 'user']
+                    ]);
+                }
+
+                return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
+            }
+            return new JsonResponse(['error' => 'user not found'], Response::HTTP_NOT_FOUND);
         }
-
-        if($user->getRoles()[0] === 'ROLE_ORGANISM') {
-            $jsonContent = $this->serializer->serialize($user, 'json', [
-                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
-                    return $object->getId();
-                },
-                AbstractNormalizer::IGNORED_ATTRIBUTES => ['student','students', 'profile','organismAdmins', 'organisms', 'userIdentifier', 'user']
-            ]);
-
-        }else{
-            //Serialize $user
-            $jsonContent = $this->serializer->serialize($user, 'json', [
-                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
-                    return $object->getId();
-                },
-                AbstractNormalizer::IGNORED_ATTRIBUTES => ['organism','createAt' ,'organismAdmins', 'students', 'organisms', 'userIdentifier', 'user']
-            ]);
-        }
-
-        return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
+        // If the user is not authenticated, return an error response
+        return new JsonResponse(['error' => 'token is null'], Response::HTTP_UNAUTHORIZED);
     }
 
-
 }
+ 

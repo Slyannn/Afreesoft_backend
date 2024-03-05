@@ -1,0 +1,14 @@
+<h1>Activez votre compte</h1>
+{% if user.student %}
+    <p>Bonjour {{ user.student.firstname }},</p>
+{% else %}
+    <p>Bonjour {{ user.organism.organismAdmin.name }},</p>
+{% endif %}
+<p>Merci de vous être inscrit(e) sur EduCare! Pour finaliser votre inscription et activer votre compte,
+    veuillez cliquer sur le lien ci-dessous :</p>
+<p><a href="{{ absolute_url(path('verify_user', {token: token})) }}">lien</a></p>
+<p><strong>NB:</strong> Ce lien expirera dans les 3 heures</p>
+<p>
+    Cordialement,<br>
+    L'équipe EduCare
+</p>
