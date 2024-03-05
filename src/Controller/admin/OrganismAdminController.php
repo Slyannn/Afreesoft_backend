@@ -2,9 +2,11 @@
 
 namespace App\Controller\admin;
 
+use App\Entity\Organism;
 use App\Entity\OrganismAdmin;
 use App\Form\OrganismAdminType;
 use App\Repository\OrganismAdminRepository;
+use App\Service\SendMailService;
 use App\Service\UploadFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -150,4 +152,39 @@ class OrganismAdminController extends AbstractController
 
         return $this->redirectToRoute('app_organism_admin_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/status/{id}', name: 'app_update_status', methods:  ['GET', 'POST'])]
+    public function changeStatut(Request $request,
+                                 OrganismAdmin $organismAdmin,
+                                 EntityManagerInterface      $entityManager,
+                                 SendMailService             $sendMailService
+    ){
+
+        $newStatus = !$organismAdmin->getProfile()?->isEnable();
+        $organismAdmin->getProfile()?->setEnable($newStatus);
+        $entityManager->flush();
+
+        if($newStatus){
+            $sendMailService->send(
+                'no-reply@educare.fr',
+                $organismAdmin->getProfile()?->getUser()?->getEmail(),
+                'Vérification de vos Informations a été faite!',
+                'organismIsVerified',
+                compact('organismAdmin', 'newStatus')
+            );
+        }else{
+            $sendMailService->send(
+                'no-reply@educare.fr',
+                $organismAdmin->getProfile()?->getUser()?->getEmail(),
+                'Vérification de vos Informations a été faite!',
+                'organismIsVerified',
+                compact('organismAdmin', 'newStatus')
+            );
+        }
+
+
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+
 }
