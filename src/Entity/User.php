@@ -34,9 +34,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Organism $organism = null;
 
+    #[ORM\Column]
+    private ?bool $verified= false;
+
 
     public function __construct()
     {
+            if(in_array('ROLE_ADMIN', $this->roles, true)){
+                $this->verified = true;
+            }
 
     }
 
@@ -141,6 +147,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->organism = $organism;
+
+        return $this;
+    }
+
+    public function isVerified(): ?bool
+    {
+        return $this->verified;
+    }
+
+    public function setVerified(bool $verified): static
+    {
+        $this->verified = $verified;
 
         return $this;
     }
