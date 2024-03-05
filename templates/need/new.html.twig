@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Need{% endblock %}
+
+{% block body %}
+    <div class="card text-center">
+        <div class="card-header">
+            <h2>Create new Need</h2>
+        </div>
+        <div class="card-body">
+            {{ include('need/_form.html.twig') }}
+        </div>
+
+    </div>
+
+    <a type="button" class="btn btn btn-outline-dark m-3" href="{{ path('app_need_index') }}">back to list</a>
+{% endblock %}

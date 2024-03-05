@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg bg-body-transparent p-4 m-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Espace Administrateur</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}" aria-current="page"   href="{{path('app_home')}}">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_need_' %}active{% endif %}" href="{{path('app_need_index')}}">Needs</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_organism_admin_'  %}active{% endif %}" href="{{path('app_organism_admin_index')}}">Organism-Admin</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_organism_profile_'  %}active{% endif %}" href="{{path('app_organism_profile_index')}}">Organism-Profile</a>
+        </li>
+
+        <!--app_organism_profile_index-->
+
+       </ul>
+     
+    </div>
+  </div>
+  <div class="d-flex flex-row-reverse ">
+    {% if app.user %}
+      <div class="p-2"><a href="{{path('app_logout') }}">Déconnecter</a></div>
+    {% endif %}
+  </div>
+</nav>
+

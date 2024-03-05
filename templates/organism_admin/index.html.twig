@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OrganismAdmin index{% endblock %}
+
+{% block body %}
+    <h1>OrganismAdmin index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center">Id &#x1F511;</th>
+                <th class="text-center">Logo &#128248; </th>
+                <th class="text-center">Name &#9997;</th>
+                <th class="text-center">Organism Email 	&#128231;</th>
+                <th class="text-center">Phone &#x260E;</th>
+                <th class="text-center">Description &#x1F4F0; </th>
+                <th class="text-center">Address &#x1F3E0; </th>
+                <th class="text-center">Site &#127760; </th>
+
+                <th class="text-center">actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for organism_admin in organism_admins %}
+            {% set address = organism_admin.address.street ~ ' ' ~
+                organism_admin.address.zipCode ~ ' ' ~
+                organism_admin.address.city ~ ' ' ~
+                organism_admin.address.country %}
+            <tr>
+                <td>{{ organism_admin.id }}</td>
+                <td><img src="/uploads/logo/{{ organism_admin.logo }}" class="img-thumbnail" alt="logo" style="width: 50px; height: 50px;"></td>
+                <td>{{ organism_admin.name }}</td>
+                <td>{{ organism_admin.organismEmail}}</td>
+                <td>{{ organism_admin.phone }}</td>
+                <td>{{ organism_admin.description }}</td>
+                <td>{{ address}}</td>
+                <td><a href="{{ organism_admin.website}}" target="_blank">{{ organism_admin.website }}</a></td>
+                <td>
+                    <a href="{{ path('app_organism_admin_show', {'id': organism_admin.id}) }}">show</a>
+                    <a href="{{ path('app_organism_admin_edit', {'id': organism_admin.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_organism_admin_new') }}">Create new</a>
+
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New OrganismAdmin{% endblock %}
+
+{% block body %}
+    <style>
+        .form-check{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+        }
+    </style>
+
+    <div class="card text-center">
+        <div class="card-header">
+            <h2>Create new OrganismAdmin</h2>
+        </div>
+        <div class="card-body">
+            {{ include('organism_admin/_form.html.twig') }}
+        </div>
+
+    </div>
+
+    <a type="button" class="btn btn btn-outline-dark m-3" href="{{ path('app_organism_admin_index') }}">back to list</a>
+{% endblock %}
