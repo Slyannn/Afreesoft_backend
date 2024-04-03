@@ -1,0 +1,17 @@
+<h1>Verification de vos données</h1>
+<p>Bonjour {{ organismAdmin.name }},</p>
+{% if newStatus %}
+    <p>Merci de vous être inscrit(e) sur EduCare! Nous avons terminé les vérifications de vos données!
+        <br> Votre Profil est dés a présent visible sur notre platform.
+    </p>
+{% else %}
+    <p>Merci de vous être inscrit(e) sur EduCare! Votre compte a été temporairement bloqué.
+        <br> Pour plus d'information veillez prendre contact avec nos services.
+    </p>
+
+{% endif %}
+
+<p>
+    Cordialement,<br>
+    L'équipe EduCare
+</p>

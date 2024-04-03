@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OrganismAdmin{% endblock %}
+
+{% block body %}
+
+    <div class="card ">
+        <div class="card-header">
+            <h2 class="text-center text-primary m-3">Detail</h2>
+
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-2">
+                    <h5>id &#x1F511;</h5>
+                </div>
+                <div class="col-10">
+                    <p>{{ organism_admin.id }}</p>
+                    <hr>
+                </div>
+
+                <div class="col-2">
+                    <h5>Logo &#128248;</h5>
+                </div>
+                <div class="col-10">
+                    <img src="/uploads/logo/{{ organism_admin.logo }}" class="img-thumbnail" alt="logo" style="width: 100px; height: 100px;">
+                    <hr>
+                </div>
+
+
+                <div class="col-2">
+                    <h5>Name &#9997;</h5>
+                </div>
+                <div class="col-10">
+                    <span>{{ organism_admin.name }}</span>
+                    <hr>
+                </div>
+
+                <div class="col-2">
+                    <h5>Organism Email &#128231;</h5>
+                </div>
+                <div class="col-10">
+                    <span>{{ organism_admin.organismEmail }}</span>
+                    <hr>
+                </div>
+
+                <div class="col-2">
+                    <h5>Description &#x1F4F0; </h5>
+                </div>
+                <div class="col-10">
+                    <span>{{ organism_admin.description}}</span>
+                    <hr>
+                </div>
+
+
+                <div class="col-2">
+                    <h5>Phone &#x260E;</h5>
+                </div>
+                <div class="col-10">
+                    <span>{{ organism_admin.phone}}</span>
+                    <hr>
+                </div>
+                {% set address = organism_admin.address.street ~ ' ' ~
+                    organism_admin.address.zipCode ~ ' ' ~
+                    organism_admin.address.city ~ ' ' ~
+                    organism_admin.address.country %}
+
+                <div class="col-2">
+                    <h5>Address &#x1F3E0;</h5>
+                </div>
+                <div class="col-10">
+                    <span>{{ address}}</span>
+                    <hr>
+                </div>
+
+                <div class="col-2">
+                    <h5>Web &#x1F4F0;</h5>
+                </div>
+                <div class="col-10">
+                    <span><a href="{{ organism_admin.website}}"  target="_blank">{{ organism_admin.website}}</a></span>
+                    <hr>
+                </div>
+
+
+                <div class="col-2">
+                    <h5>Services &#128154;</h5>
+                </div>
+                <div class="col-10">
+                        {% for service in organism_admin.services  %}
+                            <p><span style='font-size:10px;'>&#10004;</span> {{ service.name }}</p>
+                        {% endfor %}
+                    <hr>
+                </div>
+
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-outline-success m-1" href="{{ path('app_organism_admin_edit', {'id': organism_admin.id}) }}">edit</a>
+            {{ include('organism_admin/_delete_form.html.twig') }}
+        </div>
+
+    </div>
+
+    <a type="button" class="btn btn-outline-dark m-3" href="{{ path('app_organism_admin_index') }}">back to list</a>
+
+{% endblock %}

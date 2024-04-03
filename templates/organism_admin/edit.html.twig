@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit OrganismAdmin{% endblock %}
+
+{% block body %}
+
+    <div class="card text-center">
+        <div class="card-header">
+            <h2>Edit OrganismAdmin</h2>
+        </div>
+        <div class="card-body">
+            {{ include('organism_admin/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+
+    </div>
+
+    <a type="button" class="btn btn btn-outline-dark m-3" href="{{ path('app_organism_admin_index') }}">back to list</a>
+    {{ include('organism_admin/_delete_form.html.twig') }}
+
+{% endblock %}
