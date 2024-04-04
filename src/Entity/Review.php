@@ -31,6 +31,8 @@ class Review
     #[ORM\JoinColumn(nullable: false)]
     private ?Student $author = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
 
 
     public function getId(): ?int
@@ -84,6 +86,18 @@ class Review
     public function setAuthor(?Student $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
 
         return $this;
     }

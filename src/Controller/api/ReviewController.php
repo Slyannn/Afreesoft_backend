@@ -47,6 +47,7 @@ class ReviewController extends AbstractController
 
         $review = new Review();
         $review->setContent($data['content']);
+        $review->setTitle($data['title']);
         $review->setAuthor($author);
         $review->setNote($data['note']);
         $review->setOrganism($organism);
