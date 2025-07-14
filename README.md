@@ -5,6 +5,7 @@
 EduCare est une plateforme web dédiée à la lutte contre la précarité étudiante. Elle met en relation les étudiants en difficulté avec des organismes d'aide (associations, institutions publiques comme le CROUS, etc.). La plateforme permet aux petites associations de gagner en visibilité et d'atteindre efficacement leur public cible.
 
 Ce repository contient la partie **backend** du projet, développée avec le framework Symfony 6.3.
+[Voir le front-end du projet](https://github.com/Slyannn/EduCare_frontend.git)
 
 ## 📦 Installation & Configuration
 
