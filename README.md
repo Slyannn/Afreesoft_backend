@@ -6,6 +6,78 @@ EduCare est une plateforme web dédiée à la lutte contre la précarité étudi
 
 Ce repository contient la partie **backend** du projet, développée avec le framework Symfony 6.3.
 
+## 📦 Installation & Configuration
+
+### Prérequis
+```bash
+# Versions requises
+PHP >= 8.1
+Composer
+Base de données (MySQL/PostgreSQL/SQLite)
+```
+
+### Installation
+```bash
+# Cloner le repository
+git clone [url-du-repo]
+cd afreesoft-backend
+
+# Installer les dépendances
+composer install
+
+# Configuration environnement
+cp .env .env.local
+# Éditer .env.local avec vos paramètres
+
+# Base de données
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
+
+# Démarrer le serveur
+symfony server:start
+```
+
+### Variables d'Environnement
+```env
+# Base de données
+DATABASE_URL="mysql://user:password@127.0.0.1:3306/educare"
+
+# JWT Secret
+JWT_SECRET="your-secret-key"
+
+# Email (Mailer)
+MAILER_DSN="smtp://localhost:1025"
+
+# CORS
+CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
+```
+
+## 🎯 Utilisation
+
+### Workflow Typique
+
+#### Pour un Étudiant :
+1. **Inscription** → Vérification email → Connexion
+2. **Profil** → Sélection des besoins (aide alimentaire, logement, etc.)
+3. **Recherche** → Visualisation des organismes correspondants
+4. **Contact** → Envoi de messages aux organismes intéressants
+5. **Évaluation** → Avis après utilisation des services
+
+#### Pour un Organisme :
+1. **Inscription** → Upload de certification → Attente validation
+2. **Validation admin** → Activation du compte → Notification email
+3. **Profil** → Configuration des services proposés
+4. **Réception** → Messages des étudiants intéressés
+5. **Gestion** → Mise à jour des informations
+
+#### Pour un Administrateur :
+1. **Connexion** → Interface d'administration
+2. **Validation** → Examen des demandes d'organismes
+3. **Gestion** → CRUD des besoins et services
+4. **Monitoring** → Suivi de l'activité plateforme
+
+
 ## 🏗️ Architecture du Projet
 
 ### Entités Principales
@@ -195,77 +267,6 @@ POST /api/resend_verif/{email} - Renvoi email vérification
 ### Base de Données
 - **Doctrine Migrations** - Versioning de la base
 - **Fixtures** - Données de test (admin par défaut)
-
-## 📦 Installation & Configuration
-
-### Prérequis
-```bash
-# Versions requises
-PHP >= 8.1
-Composer
-Base de données (MySQL/PostgreSQL/SQLite)
-```
-
-### Installation
-```bash
-# Cloner le repository
-git clone [url-du-repo]
-cd afreesoft-backend
-
-# Installer les dépendances
-composer install
-
-# Configuration environnement
-cp .env .env.local
-# Éditer .env.local avec vos paramètres
-
-# Base de données
-php bin/console doctrine:database:create
-php bin/console doctrine:migrations:migrate
-php bin/console doctrine:fixtures:load
-
-# Démarrer le serveur
-symfony server:start
-```
-
-### Variables d'Environnement
-```env
-# Base de données
-DATABASE_URL="mysql://user:password@127.0.0.1:3306/educare"
-
-# JWT Secret
-JWT_SECRET="your-secret-key"
-
-# Email (Mailer)
-MAILER_DSN="smtp://localhost:1025"
-
-# CORS
-CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
-```
-
-## 🎯 Utilisation
-
-### Workflow Typique
-
-#### Pour un Étudiant :
-1. **Inscription** → Vérification email → Connexion
-2. **Profil** → Sélection des besoins (aide alimentaire, logement, etc.)
-3. **Recherche** → Visualisation des organismes correspondants
-4. **Contact** → Envoi de messages aux organismes intéressants
-5. **Évaluation** → Avis après utilisation des services
-
-#### Pour un Organisme :
-1. **Inscription** → Upload de certification → Attente validation
-2. **Validation admin** → Activation du compte → Notification email
-3. **Profil** → Configuration des services proposés
-4. **Réception** → Messages des étudiants intéressés
-5. **Gestion** → Mise à jour des informations
-
-#### Pour un Administrateur :
-1. **Connexion** → Interface d'administration
-2. **Validation** → Examen des demandes d'organismes
-3. **Gestion** → CRUD des besoins et services
-4. **Monitoring** → Suivi de l'activité plateforme
 
 ## 🌟 Points Forts du Système
 
